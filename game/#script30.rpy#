@@ -1,0 +1,220 @@
+﻿# You can place the script of your game in this file.
+
+# Declare images below this line, using the image statement.
+# eg. image eileen happy = "eileen_happy.png"
+
+define urname = 'You'
+
+image bg room = "room.jpg"
+image bg bedroom = "bedroom.jpg"
+image letter = "letter.jpeg"
+image desk = "desk.jpg"
+
+# Declare characters used by this game.
+define n  = Character('' , color ="#36d1cb")
+define mc = Character("[urname]", color="#c8ffc8")
+define l = Character("Letter", color="#efb41f")
+
+define classes = []
+define temp = 0
+define length =0
+
+define loan_total = 5000
+
+define housing = "none"
+
+# The game starts here.
+label start:
+
+    #Act 1: Entering College
+
+    #Scene 1: Acceptance
+
+    scene bg room
+    play music "theme.mp3"
+    
+    mc "I can’t believe my dream school finally wrote back! I’ve been feeling so nervous about this!"
+
+    mc "I can’t wait to register for my classes, make so many new friends, and maybe even get out of the house for once!"
+
+    mc "{color=#ceccc6}{i}Man, my life is depressing and getting into this school is my last chance of ever being happy!{/i}{/color}"
+    
+    mc "{color=#ceccc6}{i}Welp, moment of truth I guess...{/i}{/color}"
+    
+    show letter
+    
+    l "Dear..."
+    
+    $ urname = renpy.input("What is your name?") or "Dat Boi"
+        
+    l "[urname]"
+    
+    l "We at Doki Valley State University are delighted to inform you that you have been admitted to the Class of 20XX. Please accept our congratulations for your outstanding achievements."
+    
+    hide letter
+    
+    mc "{color=#ceccc6}{i}Wait what acheivements lmao{/i}{/color}"
+    
+    show letter
+    
+    l "Doki Valley prides itself in being the top state school in..."
+    
+    hide letter
+    
+    mc "{color=#ceccc6}{i}Yeah whatever, when do I register for classes?{/i}{/color}"
+    
+    n "You get bored and skip to the end of the letter."
+    
+    show letter
+        
+    l "We’re so proud to welcome you into the Doki Valley family! Starting today, you can view our course catalog at (insert website here) and register for housing and classes. If you have any questions, you can call our admissions office at (random number)."
+    
+    l "Sincerely, (Admissions Director Name)"
+    
+    hide letter
+    
+    mc "OMG I GOT IN!!!! xD"
+    
+    mc "I’m going to have so much fun!"
+    
+    mc "I’m going to drown myself in student loans!"
+    
+    
+    #Scene 2: Registration 
+    
+    scene bg bedroom 
+    with dissolve
+    
+    n "You are anxiously applying for housing and dining."
+    
+    menu:
+    
+        "Apartment Single: 9K":
+            jump app
+        
+        "Dorm Double: 7K":
+            jump double
+        
+        "Dorm Triple: 5K":
+            jump triple
+        
+    label app:
+    
+        $ housing = "app"
+        jump hdeclare
+        
+    label double:
+    
+        $ housing = "double"
+        jump hdeclare
+    
+    label triple: 
+    
+        $ housing = "triple"
+        jump hdeclare
+    
+    label hdeclare:
+    
+        if housing == "app":
+            mc "Imma live like a king."
+        
+        if housing == "double":
+            mc "Dorm life with a potential new best friend..."
+            mc "I hope."
+        
+        if housing == "triple":
+            mc "Affordable Dorm life with some new besties..."
+            mc "I really hope."
+
+    mc "Time to register for classes."
+    
+    
+    label housing:
+    
+        $ c_length = (4 - length)
+        if c_length >= 4:
+            $ c_length2 = "Choose %s classes." % str(c_length)
+            n "[c_length2]"            
+        elif c_length > 1:
+            $ c_length2 = "Choose %s more classes." % str(c_length)
+            n "[c_length2]"
+        else:
+            $ c_length2 = "Choose %s more class." % str(c_length)
+            n "[c_length2]"            
+        
+        menu:
+            "test1":
+                $ temp = 1
+                jump l_add
+
+            "test2":            
+                $ temp = 2
+                jump l_add
+        
+            "test3":
+                $ temp = 3 
+                jump l_add
+
+            "test4":
+                $ temp = 4
+                jump l_add
+
+            "test5":
+                $ temp = 5
+                jump l_add
+
+            "test6":
+                $ temp = 6
+                jump l_add
+
+            "test7":
+                $ temp = 7
+                jump l_add
+        
+            "test8":
+                $ temp = 8
+                jump l_add
+
+            "test9":
+                $ temp = 9
+                jump l_add
+        
+            "test10":
+                $ temp = 10
+                jump l_add
+        
+            "test11":
+                $ temp = 11
+                jump l_add
+
+            "test12":
+                $ temp = 12
+                jump l_add
+
+    label l_add:
+        
+        $ curr = ("class%s" % str(temp))
+        if length == 3:
+            $ classes.append(("class%s" % str(temp)))
+            $ length = 0
+            $ temp =0
+            jump Done
+        
+        elif curr in classes:
+            n "You already picked that class."
+            jump housing
+        
+        else:
+            $ classes.append(("class%s" % str(temp)))
+            $ length = length + 1 
+            jump housing
+
+    label Done:
+        
+        mc "Well I registered for all my classes finished."
+        $cla_cur = ("I'll be taking %s, %s, %s, and %s." % (classes[0], classes[1], classes[2],  classes[3]))
+        mc "[cla_cur]"
+    
+    
+    
+    return
